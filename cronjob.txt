@@ -1,0 +1,2 @@
+# */5 * * * * sudo -u www-data /usr/local/bin/wp --user=ccvAdmin --url=http://ccvcrm.cloudapp.net --path=/var/www/html civicrm api job.execute auth=0
+*/5 * * * * sudo -u www-data /usr/local/bin/wp --path=/var/www/html civicrm api job.execute auth=0

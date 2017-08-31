@@ -1,0 +1,76 @@
+version: '2'
+volumes:
+  mysqlData:
+    driver: local
+  wwwData:
+    driver: local
+
+services:
+
+  civipress-apache:
+    build:
+      context: .
+      dockerfile: Dockerfile.wpcivi-apache
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    ports:
+      - 80:80
+    environment:
+      APACHE_LOG_LEVEL: debug
+      APACHE_BACKEND_HOST: php
+      APACHE_SERVER_ROOT: /var/www/html
+      APACHE_LOG_DIR: /var/log/
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_GROUP: www-data
+      APACHE_LOCK_DIR: /var/run/
+      APACHE_PID_FILE: /var/run/apache.pid
+      DOCKER_HOST: $DOCKER_HOST
+      DBHOST: mariadb
+      DBUSER: wordpress
+      DBPASS: wordpress
+      SITETITLE: cividev
+      SITEUSER: wpAdmin
+      SITEPASS: wpPassword
+      SITEEMAIL: jtzimmer6@gmail.com
+    volumes:
+      - wwwData:/var/www/html
+    mem_limit: 200m
+  # Options for macOS users (http://docs.docker4wordpress.org/en/latest/macos)
+  #      - codebase:/var/www/html:cached # User-guided caching
+  #      - docker-sync:/var/www/html # Docker-sync
+    labels:
+      - 'traefik.backend=apache'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:wp.docker.localhost'
+
+  mariadb:
+    image: wodby/mariadb:10.1-2.3.3
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    # command: >-
+    #   { 
+    #   echo 'performance_schema = 0';
+    #   echo 'innodb_buffer_pool_size = 20M';
+    #   } >> /etc/mysql/my.cnf
+    volumes:
+      - mysqlData:/var/lib/mysql
+    mem_limit: 200m 
+
+  # mysql:
+  #   image: mysql:5.6 
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: insecurepass
+  #   command: >-
+  #     { 
+  #     echo 'performance_schema = 0';
+  #     echo 'innodb_buffer_pool_size = 20M';
+  #     } >> /etc/mysql/my.cnf
+  #   volumes:
+  #     - mysqlData:/var/lib/mysql
+  #   mem_limit: 200m
+    
