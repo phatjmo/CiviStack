@@ -28,6 +28,7 @@ services:
       APACHE_PID_FILE: /var/run/apache.pid
       DOCKER_HOST: $DOCKER_HOST
       DBHOST: mariadb
+      DBNAME: wordpress
       DBUSER: wordpress
       DBPASS: wordpress
       SITETITLE: cividev
@@ -37,13 +38,6 @@ services:
     volumes:
       - wwwData:/var/www/html
     mem_limit: 200m
-  # Options for macOS users (http://docs.docker4wordpress.org/en/latest/macos)
-  #      - codebase:/var/www/html:cached # User-guided caching
-  #      - docker-sync:/var/www/html # Docker-sync
-    labels:
-      - 'traefik.backend=apache'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:wp.docker.localhost'
 
   mariadb:
     image: wodby/mariadb:10.1-2.3.3

@@ -7,6 +7,7 @@ RUN echo "America/Phoenix" > /etc/timezone && \
 #Installs required packages
 RUN apt-get update && apt-get install -y \
 	  bash \
+		vim \
 		wget \
 	  unzip \
 	  cron \
