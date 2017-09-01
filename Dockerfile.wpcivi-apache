@@ -63,5 +63,10 @@ RUN composer install
 # Composer is a pain in the ass. Doesn't install cleanly, must reference from Extensions folder using 
 # /tmp/civix/bin/civix or else it picks the wrong path and doesn't find the autoloaders.
 
+# Install civi-meet extension
+RUN mkdir /var/www/html/Extensions
+WORKDIR /var/www/html/Extensions
+RUN git clone https://github.com/phatjmo/civi-meetup.git com.wordpress.civievent.meetup
+
 EXPOSE 80
 CMD ["/usr/bin/supervisord"]

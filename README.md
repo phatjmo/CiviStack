@@ -8,3 +8,5 @@ Once up, you'll need to do the following in order to complete the Civi Install:
 * Click on the "CiviCRM Installer" link on the toolbar.
 * Click on the "Install Civi..." button on that page (or whatever it says)
 
+
+Force Build to update dev extension in /var/www/html/Extensions
