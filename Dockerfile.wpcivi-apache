@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
 
 #Installs the mysql client for php.  CiviCRM still uses mysql - not mysqli.  CiviCRM won't allow install onto the wordpress:4.4.2 image without this.
 RUN docker-php-ext-install mysql
+#Installs the zip manager for PHP. Way more effective and convenient than the junk above.
 RUN docker-php-ext-install zip
 
 #Installs the wordpress cli tool.  CiviCRM expects a cron job to run that triggers its scheduled jobs and it's easier to run this with the wordpress cli tool - wp-cli.
