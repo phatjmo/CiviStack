@@ -8,5 +8,4 @@ Once up, you'll need to do the following in order to complete the Civi Install:
 * Click on the "CiviCRM Installer" link on the toolbar.
 * Click on the "Install Civi..." button on that page (or whatever it says)
 
-
-Force Build to update dev extension in /var/www/html/Extensions
+As long as you don't blow away your volumes, you should only have to do the above on your first deploy.
