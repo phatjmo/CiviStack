@@ -15,11 +15,20 @@ RUN apt-get update && apt-get install -y \
 	  sudo \
 	  rsyslog \
 	  mysql-client \
-      libpcap0.8 \
+    libpcap0.8 \
 	  supervisor
+
+#This part installs php-zip because Debian Jessie completely omitted the package!
+# RUN apt-get update && apt-get install -y \
+# 		php-pclzip \
+# 		libzip \
+# 		libzip-dev
+# RUN pecl install zip
+# RUN echo "extension=zip.so" > /usr/local/etc/php/conf.d/docker-php-ext-zip.ini
 
 #Installs the mysql client for php.  CiviCRM still uses mysql - not mysqli.  CiviCRM won't allow install onto the wordpress:4.4.2 image without this.
 RUN docker-php-ext-install mysql
+RUN docker-php-ext-install zip
 
 #Installs the wordpress cli tool.  CiviCRM expects a cron job to run that triggers its scheduled jobs and it's easier to run this with the wordpress cli tool - wp-cli.
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
